@@ -1,0 +1,42 @@
+/* Reset the default CSS set */
+@import url('reset.css');
+
+html {
+  background-color: hsla(263, 0%, 8%, 1);
+}
+
+body {
+  background-color: hsla(126, 100%, 29%, 0.9);
+  width: 1000px;
+  margin: 50px auto;
+  border: 1px solid hsla(158, 100%, 46%, 1);
+  border-radius: 3px;
+}
+
+.navigation-bar {
+  width: 900px; height: 50px;
+  margin: 100px auto 50px auto;
+}
+
+.navigation-bar nav {
+}
+
+.navigation-bar nav input {
+  width: 100%;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 2px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.navigation-bar nav input:hover, .navigation-bar nav input:focus {
+  outline: outset 10px hsla(263, 0%, 50%, .8);
+}
+
+.content-area {
+  width: 900px;
+  margin: 0 auto;
+  border-radius: 2px;
+}
