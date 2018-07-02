@@ -18,10 +18,7 @@ body {
   margin: 100px auto 50px auto;
 }
 
-.navigation-bar nav {
-}
-
-.navigation-bar nav input {
+.nav-input {
   width: 100%;
   font-size: 50px;
   font-weight: bold;
@@ -31,7 +28,10 @@ body {
   border-radius: 5px;
 }
 
-.navigation-bar nav input:hover, .navigation-bar nav input:focus {
+.navigation-bar nav input:hover {
+  box-shadow: 0 0 10px white;
+}
+ .navigation-bar nav input:focus {
   outline: outset 10px hsla(263, 0%, 50%, .8);
 }
 
