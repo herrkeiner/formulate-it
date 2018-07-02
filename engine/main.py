@@ -5,8 +5,8 @@ class primeIterator:
         Iterator that generates prime numbers on the fly!
         :D
     '''
-    def __init__(self, max=0):
-        self.max = max
+
+    def __init__(self):
         # Creates the prime list
         self.primes_list = [2, 3]
         self.counter = 0
@@ -35,12 +35,26 @@ class primeIterator:
                 self.primes_list.append(self.prime_candidate)
                 return self.prime_candidate
 
-            # Regenerate a new prime candidate
+            # Generate a new prime candidate
             self.prime_candidate = self.prime_candidate + 2
 
-            # Return primes list
-            def primeList():
-                return self.primes_list
+    # Return primes list
+    def primeList(self):
+        return self.primes_list
+
+def is_palindromic(number):
+    '''
+        Syntax: is_palindromic(arg1)
+
+        Return True if arg1 is a palindromic number.
+    '''
+
+    number = str(number)
+
+    if number == number[::-1]:
+        return True
+    else: 
+        return False
 
 def prime_fact(number):
     '''
@@ -57,21 +71,20 @@ def prime_fact(number):
     # If the integer is negative gets its absolute number.
     number = abs(number)
 
-    # Number must not be zero and It must be > and != than abs(1).
+    # Number must not be zero and It must be > and != than |1|.
     if number == 0 or number == 1:
         return None
 
     primes_baby = primeIterator()
 
     factors_dic = dict()
-    original_number = number
 
     for factor_candidate in primes_baby:
         # Gets the next prime number
         # Checks if our number is divisible for the last retreived prime
         if number % factor_candidate == 0:
             factors_dic[factor_candidate] = 0
-            # Hm, It is bitch! Therefore, let's see how many times it is divisible
+            # Hm, It is, bitch! Therefore, let's see how many times it is divisible
             while number % factor_candidate == 0:
                 number = number / factor_candidate
                 factors_dic[factor_candidate] = factors_dic[factor_candidate] + 1
@@ -85,4 +98,5 @@ def main():
     n = int(input('Type a number to see its factorization --> '))
 
     print(prime_fact(n))
+    print(is_palindromic(90066019))
 main()
