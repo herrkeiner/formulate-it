@@ -6,6 +6,7 @@ html {
 }
 
 body {
+  position: relative;
   background-color: hsla(126, 100%, 29%, 0.9);
   width: 1000px; height: 860px;
   margin: 50px auto 0 auto;
