@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 class primeIterator:
     '''
         Iterator that generates prime numbers on the fly!
@@ -93,10 +91,9 @@ def prime_fact(number):
         if number == 1:
             return factors_dic
 
-def main():
+if __name__ == "__main__":
     print('Never gonna give... you... up!')
     n = int(input('Type a number to see its factorization --> '))
 
     print(prime_fact(n))
     print(is_palindromic(90066019))
-main()
