@@ -18,6 +18,12 @@ def send_html():
 def send_static(filepath=None):
     return static_file(filepath, root='./static/')
 
+@route('/parser&q=<number:re:\d*>')
+def processRequest(number):
+    if number == '':
+        number = 'NaN'
+    return str(number)
+
 @route('/<:re:index.html>')
 def wrong_path():
     redirect("/index.html")
