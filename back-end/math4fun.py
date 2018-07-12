@@ -47,7 +47,8 @@ def is_palindromic(number):
         Returns True if arg1 is a palindromic number.
     '''
 
-    number = str(number)
+    if type(number) != 'str':
+        number = str(number)
 
     if number == number[::-1]:
         return True
