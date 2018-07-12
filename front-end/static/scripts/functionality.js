@@ -25,11 +25,22 @@ function keyParser(event) {
 
 function ajaxRequest() {
   var xhttp = new XMLHttpRequest();
+  var infoHeader = document.getElementById('infoHeader');
+
   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
+    switch(this.readyState) {
+      case 2:
+        infoHeader.innerHTML = "Requesting . . .";
+        infoHeader.style.display = "block";
+        break;
+      case 4:
+        if (this.status == 200) {
+            infoHeader.innerHTML = this.responseText;
+        }
+        break;
     }
   }
+
   xhttp.open('GET', 'parser&q=' + navbar.value, true);
   xhttp.send();
 }

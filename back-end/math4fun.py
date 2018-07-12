@@ -44,21 +44,21 @@ def is_palindromic(number):
     '''
         Syntax: is_palindromic(arg1)
 
-        Return True if arg1 is a palindromic number.
+        Returns True if arg1 is a palindromic number.
     '''
 
     number = str(number)
 
     if number == number[::-1]:
         return True
-    else: 
+    else:
         return False
 
-def prime_fact(number):
+def primeFact(number):
     '''
         Syntax: prime_fact(arg)
 
-        If the arg is a composed number return the factorization within a dictionary.
+        If the arg is a composed number returns the factorization within a dictionary.
         Otherwise if the number is prime, then it returns the number itself.
     '''
     # The argument must be an integer.
@@ -69,7 +69,7 @@ def prime_fact(number):
     # If the integer is negative gets its absolute number.
     number = abs(number)
 
-    # Number must not be zero and It must be > and != than |1|.
+    # Number must not be zero and It must be > |1|.
     if number == 0 or number == 1:
         return None
 
