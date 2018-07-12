@@ -35,7 +35,10 @@ function ajaxRequest() {
         break;
       case 4:
         if (this.status == 200) {
-            infoHeader.innerHTML = this.responseText;
+            var jObj = JSON.parse(this.responseText);
+            infoHeader.innerHTML = 'Number: ' + jObj.rNumber;
+            document.getElementById('factorials').innerHTML = jObj.fResult;
+            console.log(jObj);
         }
         break;
     }

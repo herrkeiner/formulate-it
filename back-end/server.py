@@ -1,7 +1,7 @@
 #!/usr/bin/python
 '''Basic Webserver for formulate-it project'''
 
-import os, sys
+import os, sys, json
 from bottle import route, run, static_file, redirect
 import math4fun as m4f
 
@@ -31,7 +31,7 @@ def processRequest(number):
     except ValueError:
         dataDict['fResult'] = 'NaN'
 
-    return str(dataDict)
+    return json.dumps(dataDict)
 
 #@route('/<:re:index.html>')
 #def wrong_path():

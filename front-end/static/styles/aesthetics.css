@@ -54,6 +54,11 @@ body {
   text-align: center;
 }
 
+.content-area section h3 {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
 .footer-area {
   position: absolute;
   bottom: 0;
