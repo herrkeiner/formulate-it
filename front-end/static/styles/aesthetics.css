@@ -1,16 +1,32 @@
 /* Reset the default CSS set */
 @import url('reset.css');
+@import url('https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text');
 
 html {
-  background-color: hsla(66, 58%, 43%, 1);
+  background-color: hsl(66, 0%, 12%);
 }
 
 body {
   position: relative;
-  background-color: white;
+  background-color: hsla(262, 95%, 79%, 0.9);
   width: 1000px; height: 860px;
   margin: 50px auto 0 auto;
   border-radius: 3px;
+}
+
+.site-logo {
+  width: 100%;
+
+  position: absolute;
+  bottom: 100px;
+  text-align: center;
+  z-index: -1;
+
+  color: #fff;
+  font-family: 'Libre Barcode 128 Text', cursive, sans-serif;
+  font-size: 180px;
+  word-spacing: 50px;
+
 }
 
 .navigation-bar {
@@ -54,7 +70,8 @@ body {
   text-align: center;
 }
 
-.content-area section h3 {
+.content-area .section-data {
+/*  display: none;*/
   font-family: sans-serif;
   font-weight: bold;
 }
