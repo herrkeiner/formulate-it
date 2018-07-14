@@ -39,28 +39,29 @@ div.site-logo {
 }
 
 .nav-input {
+  box-sizing: border-box;
   width: 100%;
-  font-size: 50px;
+  font-size: 45px;
   font-weight: bold;
   text-align: center;
   letter-spacing: 2px;
-  border: 0;
+  border: 15px double #1f1f1f;
   border-radius: 5px;
-
 }
 
 .navigation-bar nav input:hover {
-  box-shadow: 0 0 10px white;
+  box-shadow: 3px 3px 2px 0px #d8d8d8;
 }
  .navigation-bar nav input:focus {
-
+   box-shadow: 3px 3px 5px 0px #d8d8d8;
+   outline: none;
 }
 
 .content-area {
-  margin: 65px auto;
+  margin: 75px auto;
   width: 900px;
   border-radius: 2px;
-  border: 2px solid red;
+  border: 10px dashed #1f1f1f;
 }
 
 .content-area section h1 {
