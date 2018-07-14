@@ -54,10 +54,18 @@ function ajaxRequest() {
 
             document.getElementById('factorials').innerHTML = str.slice(0, -3);
 
-            if (jObj.isPalin == 'False')
+            if ( jObj.isPalin == 'False' )
               document.getElementById('palindromic').innerHTML = 'No';
             else
               document.getElementById('palindromic').innerHTML = 'Yes';
+
+            for (
+                  var i = 0, h3lements = document.getElementsByClassName('section-data');
+                  i <= h3lements.length;
+                  i++
+                )
+                h3lements[i].style.display = 'block';
+                
         }
         break;
     }

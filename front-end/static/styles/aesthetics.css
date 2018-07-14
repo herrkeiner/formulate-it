@@ -3,18 +3,20 @@
 @import url('https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text');
 
 html {
-  background-color: hsl(66, 0%, 12%);
+  background-color: hsl(66, 0%, 12%);;
 }
 
 body {
   position: relative;
-  background-color: hsla(262, 95%, 79%, 0.9);
-  width: 1000px; height: 860px;
   margin: 50px auto 0 auto;
+
+  width: 1000px; height: 860px;
+
+  background-color: hsla(262, 95%, 79%, 0.9);
   border-radius: 3px;
 }
 
-.site-logo {
+div.site-logo {
   width: 100%;
 
   position: absolute;
@@ -51,7 +53,7 @@ body {
   box-shadow: 0 0 10px white;
 }
  .navigation-bar nav input:focus {
-  outline: outset 10px hsla(263, 0%, 50%, .8);
+
 }
 
 .content-area {
@@ -71,7 +73,7 @@ body {
 }
 
 .content-area .section-data {
-/*  display: none;*/
+  display: none;
   font-family: sans-serif;
   font-weight: bold;
 }
