@@ -41,11 +41,11 @@ function ajaxRequest() {
             var str = '';
 
             if (jObj.fResult == 'NaN') {
-              infoHeader.innerHTML = 'The querry ' + jObj.rNumber + ' is not a number.'
+              infoHeader.innerHTML = 'The querry must be a <span style="text-decoration: underline;">natural number</span>!'
               break;
             }
 
-            infoHeader.innerHTML = 'Number: ' + jObj.rNumber;
+            infoHeader.innerHTML = '<span style="color: #18ff00; text-decoration: underline;">' + jObj.rNumber+'</span>';
 
             // format the factoration result to a str
             for (var key in jObj.fResult) {
@@ -61,11 +61,11 @@ function ajaxRequest() {
 
             for (
                   var i = 0, h3lements = document.getElementsByClassName('section-data');
-                  i <= h3lements.length;
+                  i <= h3lements.length - 1;
                   i++
                 )
                 h3lements[i].style.display = 'block';
-                
+
         }
         break;
     }
