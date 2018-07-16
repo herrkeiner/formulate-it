@@ -59,27 +59,25 @@ def primeFact(number):
     '''
         Syntax: prime_fact(arg)
 
-        If the arg is a composed number returns the factorization within a dictionary.
-        Otherwise if the number is prime, then it returns the number itself.
+        If the arg is a intenger number returns the factorization within a dictionary.
+        Otherwise returns ValueError exception is raised.
     '''
+    factors_dic = dict()
     # The argument must be an integer.
     if not type(number) is int:
-        print('Number must be an integer.')
-        return None
+        raise ValueError
 
-    # If the integer is negative gets its absolute number.
+    # Set var number to its absolute value.
     number = abs(number)
 
-    # abs(number) must not be zero and It must be > |1|.
+    # abs(number) must not be zero and it must be > |1|.
     if number <= 1:
-        return None
+        return factors_dic
 
     primes_baby = primeIterator()
 
-    factors_dic = dict()
-
+    # Factorization of the number
     for factor_candidate in primes_baby:
-        # Gets the next prime number
         # Checks if our number is divisible for the last retreived prime
         if number % factor_candidate == 0:
             factors_dic[factor_candidate] = 0

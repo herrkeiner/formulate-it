@@ -48,9 +48,16 @@ function ajaxRequest() {
             infoHeader.innerHTML = '<span style="color: #18ff00; text-decoration: underline overline;">' + jObj.rNumber+'</span>';
 
             // is it a prime number?
-            if (jObj.isPrime)
-              document.getElementById('pni-h3').innerHTML = 'Yes';
-            else document.getElementById('pni-h3').innerHTML = 'No';
+            if (jObj.isPrime) {
+              var a = document.getElementById('pni-h3');
+              a.innerHTML = 'Yes';
+              a.style.color = 'hsl(109, 87%, 70%)';
+
+            } else {
+              var a = document.getElementById('pni-h3');
+              a.innerHTML = 'No';
+              a.style.color = 'rgb(176, 176, 176)';
+            }
             // format the factoration result to a str
             for (var key in jObj.fResult) {
               str += key + '^' + jObj.fResult[key] + ' x ';
