@@ -32,8 +32,9 @@ def processRequest(number):
         # is the number too large to be factorized?
         if len(str(number)) <= 9:
             dataDict['fResult'] = m4f.primeFact(int(number))
-            # is the querry a prime number?
-            if len(dataDict['fResult']) == 1 # and dataDict['fResult']:
+            # does the query has only one factor and its factor's exponent is 1?
+            # Yes! Then It is prime! :D
+            if len(dataDict['fResult']) == 1 and list(dataDict['fResult'].values())[0] == 1:
                 dataDict['isPrime'] = True
             else: dataDict['isPrime'] = False
         else: dataDict['fResult'] = 'Too large'
