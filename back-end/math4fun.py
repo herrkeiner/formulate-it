@@ -70,8 +70,8 @@ def primeFact(number):
     # If the integer is negative gets its absolute number.
     number = abs(number)
 
-    # Number must not be zero and It must be > |1|.
-    if number == 0 or number == 1:
+    # abs(number) must not be zero and It must be > |1|.
+    if number <= 1:
         return None
 
     primes_baby = primeIterator()

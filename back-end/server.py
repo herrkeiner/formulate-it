@@ -25,11 +25,17 @@ def send_static(filepath=None):
 @route('/parser&q=<number>')
 def processRequest(number):
     dataDict = dict()
+    # Save the original querry
     dataDict['rNumber'] = number
+    # Is the querry not an intenger number?
     try:
         # is the number too large to be factorized?
         if len(str(number)) <= 9:
             dataDict['fResult'] = m4f.primeFact(int(number))
+            # is the querry a prime number?
+            if len(dataDict['fResult']) == 1:
+                dataDict['isPrime'] = True
+            else: dataDict['isPrime'] = False
         else: dataDict['fResult'] = 'Too large'
         # check if the number is palindromic
         dataDict['isPalin'] = str(m4f.is_palindromic(number));
