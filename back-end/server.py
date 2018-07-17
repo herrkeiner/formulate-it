@@ -39,7 +39,8 @@ def processRequest(number):
             else: dataDict['isPrime'] = False
         else: dataDict['fResult'] = 'Too large'
         # check if the number is palindromic
-        dataDict['isPalin'] = str(m4f.is_palindromic(number));
+        dataDict['isPalin'] = m4f.is_palindromic(number);
+        print(dataDict['isPalin'])
     except ValueError:
         dataDict['fResult'] = 'NaN'
 

@@ -82,23 +82,22 @@ div.site-logo {
   text-align: center;
 }
 
+/* Content area h3 spans */
+.cash3-span {
+  font-size: 25px;
+  font-weight: bold;
+}
+
 .content-area .section-data {
-  //display: none;
+  display: none;
   margin-left: 40px;
   font-size: 20px;
   color: #fff;
-
-  //font-weight: bold;
 }
 
 .footer-area {
   position: absolute;
   bottom: 0;
-  height:20px; width: 1000px;
-  border: 2px solid red;
-}
-
-#pni-h3 {
-  font-size: 25px;
-  font-weight: bold;
+  height:50px; width: 1000px;
+  background-color: #00000080;
 }

@@ -45,7 +45,7 @@ function ajaxRequest() {
               break;
             }
 
-            infoHeader.innerHTML = '<span style="color: #18ff00; text-decoration: underline overline;">' + jObj.rNumber+'</span>';
+            infoHeader.innerHTML = '<span style="color: #99ff8e; text-decoration: underline overline;">' + jObj.rNumber+'</span>';
 
             // is it a prime number?
             if (jObj.isPrime) {
@@ -60,15 +60,20 @@ function ajaxRequest() {
             }
             // format the factoration result to a str
             for (var key in jObj.fResult) {
-              str += key + '^' + jObj.fResult[key] + ' x ';
+              str += '<span style="color:#68ffea;">' + key + '</span>' + '^' + '<span style="color:#ff5e45;">' + jObj.fResult[key] + '</span>' + '  x  ';
             }
 
             document.getElementById('factorials').innerHTML = str.slice(0, -3);
 
-            if ( jObj.isPalin == 'False' )
-              document.getElementById('palindromic').innerHTML = 'No';
-            else
-              document.getElementById('palindromic').innerHTML = 'Yes';
+            if (jObj.isPalin) {
+              var a = document.getElementById('palindromic');
+              a.innerHTML = 'Yes';
+              a.style.color = 'hsl(109, 87%, 70%)';
+            } else {
+              var a = document.getElementById('palindromic');
+              a.innerHTML = 'No';
+              a.style.color = 'rgb(176, 176, 176)';
+            }
 
             for (
                   var i = 0, h3lements = document.getElementsByClassName('section-data');
