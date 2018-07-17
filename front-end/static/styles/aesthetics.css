@@ -101,3 +101,27 @@ div.site-logo {
   height:50px; width: 1000px;
   background-color: #00000080;
 }
+
+/* footer main ul */
+.footer-mul {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.footer-mul li {
+  margin: 0 50px;
+  width: 150px;
+  color: white;
+  font-size: 25px;
+  height: 100%;
+  line-height: 50px;
+}
+
+.footer-mul li:hover {
+  cursor: pointer;
+  background-color: hsla(0, 0%, 0%, 0.29);
+}
