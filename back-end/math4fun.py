@@ -1,4 +1,27 @@
-class primeIterator:
+def score(expr):
+    """"
+    Calculates the score for a given expression according to some criteria:
+    - shortness
+    - is an exact power
+    - is prime
+    - is factorial
+    - is palindromic
+    - has repeated digits
+    - has sequential digits
+    """
+    score = 0
+    if type(expr) == 'int':  # if it is a number
+        if is_palindromic(expr):
+            score += 5
+        return score*1.0/len(str(expr))
+    else:  # if it is a complex expression
+        # parse expression into numbers
+        # sum score of each number   
+
+        return score/len(str(expr))
+      
+
+class PrimeIterator:
     '''
         Iterator that generates prime numbers on the fly!
         :D
@@ -55,15 +78,15 @@ def is_palindromic(number):
     else:
         return False
 
-def primeFact(number):
+def prime_fact(number):
     '''
         Syntax: prime_fact(arg)
 
-        If the arg is a intenger number returns the factorization within a dictionary.
-        Otherwise returns ValueError exception is raised.
+        If the arg is integer returns the factorization within a dictionary.
+        Otherwise ValueError exception is raised.
     '''
     factors_dic = dict()
-    # The argument must be an integer.
+    # Argument must be an integer.
     if not type(number) is int:
         raise ValueError
 
@@ -74,17 +97,17 @@ def primeFact(number):
     if number <= 1:
         return factors_dic
 
-    primes_baby = primeIterator()
+    primes_baby = PrimeIterator()
 
     # Factorization of the number
     for factor_candidate in primes_baby:
-        # Checks if our number is divisible for the last retreived prime
+        # Checks if our number is divisible for the last retrieved prime
         if number % factor_candidate == 0:
             factors_dic[factor_candidate] = 0
             # Hm, It is, bitch! Therefore, let's see how many times it is divisible
             while number % factor_candidate == 0:
-                number = number / factor_candidate
-                factors_dic[factor_candidate] = factors_dic[factor_candidate] + 1
+                number /= factor_candidate
+                factors_dic[factor_candidate] += 1
 
         # Have we finished our factorization?
         if number == 1:
@@ -94,5 +117,6 @@ if __name__ == "__main__":
     print('Never gonna give... you... up!')
     n = int(input('Type a number to see its factorization --> '))
 
+    print('score(25): '+str(score(25)))
     print(prime_fact(n))
     print(is_palindromic(90066019))
