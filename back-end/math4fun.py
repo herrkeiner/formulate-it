@@ -16,10 +16,10 @@ def score(expr):
         return score*1.0/len(str(expr))
     else:  # if it is a complex expression
         # parse expression into numbers
-        # sum score of each number   
+        # sum score of each number
 
         return score/len(str(expr))
-      
+
 
 class PrimeIterator:
     '''
@@ -40,7 +40,7 @@ class PrimeIterator:
     def __next__(self):
         # Return the first two primes
         if self.counter < 2:
-            self.counter = self.counter + 1
+            self.counter += 1
             return self.primes_list[self.counter-1]
 
         while True:
@@ -57,7 +57,7 @@ class PrimeIterator:
                 return self.prime_candidate
 
             # Generate a new prime candidate
-            self.prime_candidate = self.prime_candidate + 2
+            self.prime_candidate += 2
 
     # Return primes list
     def primeList(self):
@@ -114,9 +114,4 @@ def prime_fact(number):
             return factors_dic
 
 if __name__ == "__main__":
-    print('Never gonna give... you... up!')
-    n = int(input('Type a number to see its factorization --> '))
-
-    print('score(25): '+str(score(25)))
-    print(prime_fact(n))
-    print(is_palindromic(90066019))
+    pass
