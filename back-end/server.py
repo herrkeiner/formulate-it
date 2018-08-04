@@ -1,7 +1,6 @@
 #!/usr/bin/python
 '''Basic Webserver for formulate-it project'''
-
-import os, sys, json
+import os, sys, json, mysql.connector
 from bottle import route, run, static_file, redirect
 import math4fun as m4f
 
