@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import json, mysql.connector as mysqlc
 from mysql.connector import errorcode
+import pdb
 
 '''Module for making the connection with the MySQL'''
 
@@ -15,7 +16,7 @@ def load_config(cFileName='config.cfg'):
         f.close()
         return config
     except FileNotFoundError:
-        print('---------- Creating {0} ----------'.format(cFileName))
+        print('---------- Creating {} ----------'.format(cFileName))
         f = open(cFileName, 'x+')
         config = dict()
         config['db'] = input('Type the database name: ')
@@ -27,33 +28,45 @@ def load_config(cFileName='config.cfg'):
         return config
 
 def connect(config=load_config()):
-    '''Make a connection with the MySQL database using the dictionary [arg] as the parameters for the connectionself.
+    '''Make a connection with the MySQL database using the dictionary [arg] as the parameters for the connection.
         If the connection is successful, returns a MySQL.Connect connector;
     '''
     try:
         print('Connecting to the MySQL server...')
         # Make the connection with the MySQL server
-        cHandle = mysqlc.connect(user=config['user'], password=config['password'], host=config['host'])
+        cHandle = mysqlc.connect(user=config['user'], password=config['password'], host=config['host'], database=config['db'])
         # Try to change to the database
         print('Changing database...')
         cHandle.database = config['db']
     except mysqlc.Error as err:
-        # The database doesn't exists
+        # Does the database not exist?
         if err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("'{0}' database doesn't exist, creating database...".format(config['db']))
-            cursor = cHandle.cursor()
-            # Let's create it
             try:
+                cHandle = mysqlc.connect(user=config['user'], password=config['password'], host=config['host'])
+                print("'{}' database doesn't exist, creating database...".format(config['db']))
+                cursor = cHandle.cursor()
+                # Let's create it
                 print('Creating database...')
-                cursor.execute("CREATE DATABASE {0} DEFAULT CHARACTER SET 'utf8'".format(config['db']))
-                print("'{0}' database has been created successfully!")
+                cursor.execute("CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(config['db']))
+                print("'{}' database has been created successfully!".format(config['db']))
+                #print('Creating table...')
+                #print('Table has been created successfully!')
+                cursor.close()
             except mysql.Error as err:
-                print('Error in the creation of the database!')
-                print('Exception info: {0}'.format(err))
+                print('Exception info: {}'.format(err))
                 return None
         else:
             print(err)
             return None
+
+    cursor = cHandle.cursor()
+    cursor.execute("""CREATE TABLE math_is_fun (
+                      id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                      is_prime BIT(1),
+                      is_pali BIT(1) NOT NULL,
+                      factorization VARCHAR(255),
+                      PRIMARY KEY(id))""")
+    cursor.close()
     return cHandle
 
 if __name__ == '__main__':
