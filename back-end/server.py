@@ -43,7 +43,7 @@ def processRequest(number):
                 cnx.close()
                 dataDict['fResult'] = json.loads(dataDict['fResult'])
                 return json.dumps(dataDict)
-        cnx.close()
+            cnx.close()
         # is the number too large to be factorized?
         if len(str(number)) <= 9:
             dataDict['fResult'] = m4f.prime_fact(number)
@@ -57,15 +57,16 @@ def processRequest(number):
             dataDict['isPalin'] = m4f.is_palindromic(number);
 
             # Record the number information into the database #
-            cnx = dbcModule.connect()
-            if cnx:
-                cursor = cnx.cursor()
-                cursor.execute(
-                "INSERT INTO math_is_fun (id, is_prime, is_pali, factorization) VALUES (%s, %s, %s, %s)",
-                (dataDict['rNumber'], dataDict['isPrime'], dataDict['isPalin'], json.dumps(dataDict['fResult'])))
-                cursor.close()
-                cnx.commit()
-            cnx.close()
+            if not dataDict['isPrime']:
+                cnx = dbcModule.connect()
+                if cnx:
+                    cursor = cnx.cursor()
+                    cursor.execute(
+                    "INSERT INTO math_is_fun (id, is_prime, is_pali, factorization) VALUES (%s, %s, %s, %s)",
+                    (dataDict['rNumber'], dataDict['isPrime'], dataDict['isPalin'], json.dumps(dataDict['fResult'])))
+                    cursor.close()
+                    cnx.commit()
+                    cnx.close()
         else: dataDict['fResult'] = 'Too large'
     except ValueError:
         dataDict['fResult'] = 'NaN'

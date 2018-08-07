@@ -35,21 +35,54 @@ class PrimeIterator:
     '''
 
     def __init__(self):
-        # Creates the prime list
-        self.primes_list = [2, 3]
+        # Set the fundamental global variables
+        self.primes_list = []
+        self.availableRecords = 0
         self.counter = 0
+        # Access the db in order to get the first 1000 primes
+        cnx = dbcModule.connect()
+        if cnx:
+            cursor = cnx.cursor()
+            # How many prime records are therein the database?
+            cursor.execute("SELECT COUNT(id) FROM math_is_fun WHERE is_prime")
+            self.availableRecords = cursor.fetchone()[0]
+            # Retrive the records if the quantity is more than 2
+            if self.availableRecords >= 2:
+                cursor.execute("SELECT id FROM math_is_fun WHERE is_prime LIMIT 1000")
+                for id in cursor:
+                    self.primes_list.append(id[0])
+            else:
+                q = "INSERT INTO math_is_fun (id, is_prime, is_pali, factorization) VALUES (%s, %s, %s, %s)"
+                cursor.execute(q, (2, True, True, json.dumps({'2': 1})))
+                cursor.execute(q, (3, True, True, json.dumps({'3': 3})))
+                cnx.commit()
+                self.primes_list = [2, 3]
+            cursor.close()
+            cnx.close()
+        else: self.primes_list = [2, 3]
 
     def __iter__(self):
-        # Set the first prime candidate
         self.prime_candidate = self.primes_list[-1] + 2
         return self
 
     def __next__(self):
-        # Return the first two primes
-        if self.counter < 2:
+        if self.counter < len(self.primes_list):
             self.counter += 1
             return self.primes_list[self.counter-1]
-
+        elif self.availableRecords > len(self.primes_list):
+            cnx = dbcModule.connect()
+            if cnx:
+                cursor = cnx.cursor()
+                print(self.primes_list)
+                l = len(self.primes_list) + 1
+                cursor.execute("SELECT id FROM math_is_fun WHERE is_prime LIMIT %s, %s", (l, l + 1000))
+                for record in cursor:
+                    self.primes_list.append(record[0])
+                print(self.primes_list)
+                cursor.close()
+                cnx.close()
+                return self.primes_list[self.counter]
+            else: self.availableRecords = 0
         while True:
             for p in self.primes_list[1:]:
                 # Is it divisible by p?
@@ -57,10 +90,17 @@ class PrimeIterator:
                     break;
 
             # Have we exhausted the primes list? and haven't we found \\
-            # any number which can devide our prime candidate?
+            # any number which        # Set the first prime candidate
             # Therefore we've found a new prime number
             if self.prime_candidate % p != 0:
                 self.primes_list.append(self.prime_candidate)
+                cnx = dbcModule.connect()
+                if cnx:
+                    cursor = cnx.cursor()
+                    cursor.execute("INSERT INTO math_is_fun (id, is_prime, is_pali, factorization) VALUES (%s, %s, %s, %s)", (self.primes_list[-1], True, is_palindromic(self.primes_list), json.dumps({self.primes_list[-1]: 1})))
+                    cursor.close
+                    cnx.commit()
+                    cnx.close()
                 return self.prime_candidate
 
             # Generate a new prime candidate
