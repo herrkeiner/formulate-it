@@ -1,9 +1,13 @@
 #!/usr/bin/python
+'''Module for making the connection with the MySQL Server.
+    It creates the [arg] config file if it doesn't exist.
+    It creates the database defined in the config file.
+    It creates the math_is_fun table if it doesn't exist.
+'''
+
 import json, mysql.connector as mysqlc
 from mysql.connector import errorcode
 import pdb
-
-'''Module for making the connection with the MySQL'''
 
 def load_config(cFileName='config.cfg'):
     ''' Loads database information from the [arg] confirguration file.
@@ -32,11 +36,9 @@ def connect(config=load_config()):
         If the connection is successful, returns a MySQL.Connect connector;
     '''
     try:
-        print('Connecting to the MySQL server...')
         # Make the connection with the MySQL server
         cHandle = mysqlc.connect(user=config['user'], password=config['password'], host=config['host'], database=config['db'])
         # Try to change to the database
-        print('Changing database...')
         cHandle.database = config['db']
     except mysqlc.Error as err:
         # Does the database not exist?
@@ -52,22 +54,30 @@ def connect(config=load_config()):
                 #print('Creating table...')
                 #print('Table has been created successfully!')
                 cursor.close()
+                print('Changing database...')
+                cHandle.database = config['db']
             except mysql.Error as err:
                 print('Exception info: {}'.format(err))
                 return None
         else:
             print(err)
             return None
-
-    cursor = cHandle.cursor()
-    cursor.execute("""CREATE TABLE math_is_fun (
+    try:
+        cursor = cHandle.cursor()
+        cursor.execute("""CREATE TABLE math_is_fun (
                       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
                       is_prime BIT(1),
                       is_pali BIT(1) NOT NULL,
                       factorization VARCHAR(255),
                       PRIMARY KEY(id))""")
-    cursor.close()
-    return cHandle
+        cursor.close()
+        return cHandle
+    except mysqlc.Error as err:
+        if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
+            return cHandle
+        else:
+            print(err)
+            return None
 
 if __name__ == '__main__':
-    connect()
+    print(connect())

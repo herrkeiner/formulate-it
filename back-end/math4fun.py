@@ -1,3 +1,10 @@
+'''
+    ...
+'''
+
+import database_connection as dbcModule
+import json
+
 def score(expr):
     """"
     Calculates the score for a given expression according to some criteria:
@@ -82,10 +89,9 @@ def prime_fact(number):
     '''
         Syntax: prime_fact(arg)
 
-        If the arg is integer returns the factorization within a dictionary.
+        If the arg is a integer returns the factorization within a dictionary.
         Otherwise ValueError exception is raised.
     '''
-    factors_dic = dict()
     # Argument must be an integer.
     if not type(number) is int:
         raise ValueError
@@ -93,9 +99,21 @@ def prime_fact(number):
     # Set var number to its absolute value.
     number = abs(number)
 
+    factors_dic = dict()
+
     # abs(number) must not be zero and it must be > |1|.
     if number <= 1:
         return factors_dic
+
+    #cnx = dbcModule.connect()
+    #if cnx:
+    #    cursor = cnx.cursor()
+    #    cursor.execute("SELECT factorization FROM math_is_fun WHERE id = %s", number)
+    #    factors_dic = json.loads(cursor.next())
+    #    if len(factors_dic):
+    #        cursor.close()
+    #        cnx.close()
+    #        return factors_dic
 
     primes_baby = PrimeIterator()
 
