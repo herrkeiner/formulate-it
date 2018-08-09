@@ -1,3 +1,4 @@
+#!/usr/bin/python
 '''
     ...
 '''
@@ -6,15 +7,15 @@ import database_connection as dbcModule
 import json
 
 def score(expr):
-    """"
+    """
     Calculates the score for a given expression according to some criteria:
     - shortness
-    - is an exact power
+    - is an exact power( is_exact_power(int) ) // Done
     - is prime
-    - is factorial
-    - is palindromic
+    - is factorial( is_factorial(int) ) // Done
+    - is palindromic( is_palindromic(str/number) ) // Done
     - has repeated digits
-    - has sequential digits
+    - has sequential digits (in development)
     """
     score = 0
     if type(expr) == 'int':  # if it is a number
@@ -185,6 +186,25 @@ def is_exact_power(number):
         cnx.close()
     return True
 
+def is_factorial(number):
+    """
+        If the arg is a number returns either True or False based on the condition if the number is a factorial.
+        Otherwise return None.
+    """
+
+    if not type(number) is int:
+        return None
+
+    (factorial, factorial_result) = (1, 1)
+
+    while number > factorial_result:
+        factorial += 1
+        factorial_result *= factorial
+
+    if number == factorial_result:
+        return True
+    else: return False
+
 def is_palindromic(number):
     '''
         Syntax: is_palindromic(arg1)
@@ -199,6 +219,29 @@ def is_palindromic(number):
         return True
     else:
         return False
+
+def has_sequential(number):
+    """
+        Returns True if the number's digit order is in sequence.
+        Returns False otherwise.
+    """
+    if not type(number) is int:
+        return None
+
+    # Gets its absolute number
+    number = abs(number)
+
+    # If the number has only one digit, then it has no sequence.
+    if number < 11:
+        return False
+
+    number = str(number)
+
+    max = len(number) // 2
+
+    while max:
+
+    return True
 
 def prime_fact(number):
     '''
@@ -220,16 +263,6 @@ def prime_fact(number):
     if number <= 1:
         return factors_dic
 
-    #cnx = dbcModule.connect()
-    #if cnx:
-    #    cursor = cnx.cursor()
-    #    cursor.execute("SELECT factorization FROM math_is_fun WHERE id = %s", number)
-    #    factors_dic = json.loads(cursor.next())
-    #    if len(factors_dic):
-    #        cursor.close()
-    #        cnx.close()
-    #        return factors_dic
-
     primes_baby = PrimeIterator()
 
     # Factorization of the number
@@ -247,9 +280,8 @@ def prime_fact(number):
             return factors_dic
 
 if __name__ == "__main__":
-    print(is_exact_power(4))
-    print(is_exact_power(128))
-    print(is_exact_power(1024))
-    print(is_exact_power(64))
-    print(is_exact_power(2))
-    print(is_exact_power(-15))
+    print(has_sequential(123))
+    print(has_sequential(123321))
+    print(has_sequential(123456789))
+    print(has_sequential(123))
+    pass

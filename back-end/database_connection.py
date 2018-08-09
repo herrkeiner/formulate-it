@@ -1,5 +1,6 @@
 #!/usr/bin/python
-'''Module for making the connection with the MySQL Server.
+'''
+    Module for making the connection with the MySQL Server.
     It creates the [arg] config file if it doesn't exist.
     It creates the database defined in the config file.
     It creates the math_is_fun table if it doesn't exist.
@@ -10,7 +11,8 @@ from mysql.connector import errorcode
 import pdb
 
 def load_config(cFileName='config.cfg'):
-    ''' Loads database information from the [arg] confirguration file.
+    '''
+        Loads database information from the [arg] confirguration file.
         If [arg] isn't specified, then uses the config.cfg file.
         If the file doesn't exists, it creates it and writes dabase information.
     '''
@@ -32,7 +34,8 @@ def load_config(cFileName='config.cfg'):
         return config
 
 def connect(config=load_config()):
-    '''Make a connection with the MySQL database using the dictionary [arg] as the parameters for the connection.
+    '''
+        Make a connection with the MySQL database using the dictionary [arg] as the parameters for the connection.
         If the connection is successful, returns a MySQL.Connect connector;
     '''
     try:
@@ -80,4 +83,4 @@ def connect(config=load_config()):
             return None
 
 if __name__ == '__main__':
-    print(connect())
+    pass
