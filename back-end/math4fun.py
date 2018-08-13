@@ -9,13 +9,13 @@ import json
 def score(expr):
     """
     Calculates the score for a given expression according to some criteria:
-    - shortness
+    - shortness // Done
     - is an exact power( is_exact_power(int) ) // Done
-    - is prime
+    - is prime // Done
     - is factorial( is_factorial(int) ) // Done
     - is palindromic( is_palindromic(str/number) ) // Done
     - has repeated digits
-    - has sequential digits (in development)
+    - has sequential digits // Done
     """
     score = 0
     if type(expr) == 'int':  # if it is a number
@@ -125,10 +125,10 @@ class PrimeIterator:
         return self.primes_list
 
 def is_exact_power(number):
-    """
+    '''
         Returns True if arg is a exact power of a certain number.
         Otherwise returns False.
-    """
+    '''
 
     if not type(number) is int:
         return None
@@ -187,10 +187,10 @@ def is_exact_power(number):
     return True
 
 def is_factorial(number):
-    """
+    '''
         If the arg is a number returns either True or False based on the condition if the number is a factorial.
         Otherwise return None.
-    """
+    '''
 
     if not type(number) is int:
         return None
@@ -220,11 +220,28 @@ def is_palindromic(number):
     else:
         return False
 
+def is_prime(number):
+    '''
+        If arg is an integer number, returns either True or False based on if it is a prime number.
+        Otherwise returns None.
+    '''
+    if not type(number) is int:
+        return None
+
+    # Get its absolute number
+    number = abs(number)
+
+    if len(prime_fact(number)) == 1:
+        return True
+    else: return False
+
+
 def has_sequential(number):
-    """
-        Returns True if the number's digit order is in sequence.
+    '''
+        If arg is an integer number, returns the length of the group of digits which are in sequence.
         Returns False otherwise.
-    """
+    '''
+
     if not type(number) is int:
         return None
 
@@ -236,18 +253,48 @@ def has_sequential(number):
         return False
 
     number = str(number)
-
-    max = len(number) // 2
+    number_length = len(number)
+    # Gets the max decimal length of the possible sequence
+    max = number_length // 2
 
     while max:
+        dynamic_length = max
+        i = 0
+        number_length = len(number)
+        while number_length >= (dynamic_length * 2):
+            # Take the set of digits to check if there is a sequence
+            p = int(number[i:i+dynamic_length])
+            # Decrease the number of digits available in the original number
+            number_length -= dynamic_length
+            # Update the position to the next group
+            i += dynamic_length
 
-    return True
+            # Checks if the p number is the highest possible intenger
+            # in its decimal scope
+            if (p + 1) % (10 ** len(str(p))) == 0:
+                dynamic_length += 1
+                if (number_length - dynamic_length) < 0:
+                    break
+            # Is there not a sequence?
+            if (p + 1) != int(number[i:i+dynamic_length]):
+                break
+            # If so, have we exhausted the digits from the original number
+            # and the numbers are in sequence?
+            elif (number_length - dynamic_length) == 0:
+                # Ok then, let's return the length of the group
+                # which are in sequence
+                return max
+        # Okay, there is not match for the sequence with decimal length max
+        # So let's try out a new decimal length
+        max -= 1
+    # Have we exhausted all the possible lengths?
+    return False
 
 def prime_fact(number):
     '''
         Syntax: prime_fact(arg)
 
-        If the arg is a integer returns the factorization within a dictionary.
+        If the arg is a integer, returns the factorization within a dictionary.
         Otherwise ValueError exception is raised.
     '''
     # Argument must be an integer.
@@ -279,9 +326,16 @@ def prime_fact(number):
         if number == 1:
             return factors_dic
 
+def shortness(number):
+    '''
+        If arg is an intenger number, returns a number which corresponds to
+        1.75 to the power of the amount of digits which arg has - 1.
+        Otherwise returns None.
+    '''
+    if not type(number) is int:
+        return None
+
+    return 1.75 ** (len(str(number)) - 1)
+
 if __name__ == "__main__":
-    print(has_sequential(123))
-    print(has_sequential(123321))
-    print(has_sequential(123456789))
-    print(has_sequential(123))
     pass

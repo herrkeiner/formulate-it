@@ -69,9 +69,9 @@ def connect(config=load_config()):
         cursor = cHandle.cursor()
         cursor.execute("""CREATE TABLE math_is_fun (
                       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                      is_prime BIT(1),
+                      is_prime BIT(1) NOT NULL,
                       is_pali BIT(1) NOT NULL,
-                      factorization VARCHAR(255),
+                      factorization VARCHAR(512),
                       PRIMARY KEY(id))""")
         cursor.close()
         return cHandle
