@@ -9,13 +9,13 @@ import json
 def score(expr):
     """
     Calculates the score for a given expression according to some criteria:
-    - shortness // Done
+    - shortness( shortness(int) ) // Done
     - is an exact power( is_exact_power(int) ) // Done
-    - is prime // Done
+    - is prime( is_prime(int) ) // Done
     - is factorial( is_factorial(int) ) // Done
     - is palindromic( is_palindromic(str/number) ) // Done
     - has repeated digits
-    - has sequential digits // Done
+    - has sequential digits( has_sequential(int) ) // Done
     """
     score = 0
     if type(expr) == 'int':  # if it is a number
@@ -235,6 +235,29 @@ def is_prime(number):
         return True
     else: return False
 
+def has_repeated(number):
+    '''
+
+    '''
+
+    if not type(number) is int:
+        return None
+
+    number = str(number)
+    digits_length = len(number) - 2
+    length_group_list = []
+    group_counter = 0
+
+    while digits_length >= 0:
+        if number[digits_length] == number[digits_length+1]:
+            try:
+                length_group_list[group_counter] += 1
+            except IndexError:
+                length_group_list.append(2)
+        elif len(length_group_list) > group_counter:
+            group_counter += 1
+
+        digits_length -= 1
 
 def has_sequential(number):
     '''
@@ -338,4 +361,8 @@ def shortness(number):
     return 1.75 ** (len(str(number)) - 1)
 
 if __name__ == "__main__":
+    has_repeated(11223344)
+    has_repeated(11111111)
+    has_repeated(00000000)
+    has_repeated(12345678911)
     pass
