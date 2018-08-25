@@ -2,7 +2,7 @@
 '''
     Module for making the connection with the MySQL Server.
     It creates the [arg] config file if it doesn't exist.
-    It creates the database defined in the config file.
+    It creates the database defined in the config file if it doesn't exist.
     It creates the math_is_fun table if it doesn't exist.
 '''
 
@@ -54,10 +54,7 @@ def connect(config=load_config()):
                 print('Creating database...')
                 cursor.execute("CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(config['db']))
                 print("'{}' database has been created successfully!".format(config['db']))
-                #print('Creating table...')
-                #print('Table has been created successfully!')
                 cursor.close()
-                print('Changing database...')
                 cHandle.database = config['db']
             except mysql.Error as err:
                 print('Exception info: {}'.format(err))

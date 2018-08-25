@@ -4,7 +4,7 @@
 '''
 
 import database_connection as dbcModule
-import json
+import json, re
 
 def score(expr):
     """
@@ -14,20 +14,17 @@ def score(expr):
     - is prime( is_prime(int) ) // Done
     - is factorial( is_factorial(int) ) // Done
     - is palindromic( is_palindromic(str/number) ) // Done
-    - has repeated digits
+    - has repeated digits( has_repeated(int) ) // Done
     - has sequential digits( has_sequential(int) ) // Done
     """
     score = 0
-    if type(expr) == 'int':  # if it is a number
+    if type(expr) is int:  # if it is a number
         if is_palindromic(expr):
             score += 5
         return score/len(str(expr))
-    else:  # if it is a complex expression
-        # parse expression into numbers
-        # sum score of each number
-
+    elif type(expr) is str:
+        #mObj = re.match(r'(\d)\s*(\*|/|+|-)\s*(\d)', expr)
         return score/len(str(expr))
-
 
 class PrimeIterator:
     '''
@@ -126,7 +123,7 @@ class PrimeIterator:
 
 def is_exact_power(number):
     '''
-        Returns True if arg is a exact power of a certain number.
+        Returns True if arg is an exact power of a certain number.
         Otherwise returns False.
     '''
 
@@ -237,31 +234,22 @@ def is_prime(number):
 
 def has_repeated(number):
     '''
-
+        If arg is an intenger, returns either True or False if it has repeated digits.
+        Otherwise returns None.
     '''
 
     if not type(number) is int:
         return None
 
-    number = str(number)
-    digits_length = len(number) - 2
-    length_group_list = []
-    group_counter = 0
+    number = str(abs(number))
 
-    while digits_length >= 0:
-        if number[digits_length] == number[digits_length+1]:
-            try:
-                length_group_list[group_counter] += 1
-            except IndexError:
-                length_group_list.append(2)
-        elif len(length_group_list) > group_counter:
-            group_counter += 1
+    return False if number != (number[0] * len(number)) else True
 
-        digits_length -= 1
 
 def has_sequential(number):
     '''
         If arg is an integer number, returns the length of the group of digits which are in sequence.
+        The higher the value returned, the more common is the ocurrances of that kind.
         Returns False otherwise.
     '''
 
@@ -276,39 +264,37 @@ def has_sequential(number):
         return False
 
     number = str(number)
-    number_length = len(number)
-    # Gets the max decimal length of the possible sequence
-    max = number_length // 2
+    length = len(number)
+    # Gets the max group length of the possible sequence
+    max = length // 2
 
     while max:
-        dynamic_length = max
-        i = 0
-        number_length = len(number)
-        while number_length >= (dynamic_length * 2):
-            # Take the set of digits to check if there is a sequence
-            p = int(number[i:i+dynamic_length])
-            # Decrease the number of digits available in the original number
-            number_length -= dynamic_length
-            # Update the position to the next group
-            i += dynamic_length
+        p = int(number[:max])
 
-            # Checks if the p number is the highest possible intenger
-            # in its decimal scope
-            if (p + 1) % (10 ** len(str(p))) == 0:
-                dynamic_length += 1
-                if (number_length - dynamic_length) < 0:
-                    break
-            # Is there not a sequence?
-            if (p + 1) != int(number[i:i+dynamic_length]):
-                break
-            # If so, have we exhausted the digits from the original number
-            # and the numbers are in sequence?
-            elif (number_length - dynamic_length) == 0:
-                # Ok then, let's return the length of the group
-                # which are in sequence
-                return max
-        # Okay, there is not match for the sequence with decimal length max
-        # So let's try out a new decimal length
+        number_length = length
+        sequence = ''
+        i = 0
+
+        while number_length > 0:
+            sequence += str(p + i)
+            number_length -= len(str(p + i))
+            i += 1
+
+        if number == sequence: return 1.5 ** (length // max)
+        else:
+            p = int(number[-max:])
+
+            sequence = ''
+            number_length = length
+            i = 0
+
+            while number_length > 0:
+                sequence = str(p + i) + sequence
+                number_length -= len(str(p + i))
+                i += 1
+
+            if number == sequence: return 1.5 ** (length // max)
+
         max -= 1
     # Have we exhausted all the possible lengths?
     return False
@@ -361,8 +347,5 @@ def shortness(number):
     return 1.75 ** (len(str(number)) - 1)
 
 if __name__ == "__main__":
-    has_repeated(11223344)
-    has_repeated(11111111)
-    has_repeated(00000000)
-    has_repeated(12345678911)
+    score('123 * 123')
     pass
