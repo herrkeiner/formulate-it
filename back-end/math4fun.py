@@ -21,15 +21,67 @@ def score(expr):
     if type(expr) is int:  # if it is a number
         if is_palindromic(expr):
             score += 5
+        if is_exact_power(expr):
+            score += 5
+        if is_prime(expr):
+            score += 15
+        if is_factorial(expr):
+            score += 10
+        if has_repeated(expr):
+            score += 5
+
+        sequential_score = has_sequential(expr)
+
+        if sequential_score:
+            score += sequential_score
+
         return score/len(str(expr))
     elif type(expr) is str:
-        #mObj = re.match(r'(\d)\s*(\*|/|+|-)\s*(\d)', expr)
-        return score/len(str(expr))
+        # Here, we build the regular expression pattern which will match
+        # what kind of expression is within the str;
+        mObj = re.match(r'''^
+                            (\d+)\s* # Matches with the first operand
+                            (/|\*|\+|-) # Matches with the operator
+                            \s*(\d+) # And finally matches with the last operand
+                            |(\d+!)| # Matches only factorials
+                            (\d+\^\d+) # Matches exponents
+                            $''', expr, re.VERBOSE)
+
+        if not mObj:
+            return (None, 'Error: No expression found.')
+
+        op = mObj.groups()
+
+        print(op)
+
+        if op[0]: # is it a simple mathematical expression?
+            # are the numbers too large to be computed?
+            if len(str(op[0])) >= 9 or len(str(op[2])) >= 9:
+                return (None, 'Expression too large to be computed.')
+
+
+        elif op[3]: # is it a factorial expression?
+            pass
+        elif op[4]: # is it a exponent expression?
+            pass
+
+        '''operant_1 = int(operand_1)
+        operand_2 = int(operand_2)
+
+        if operator == '*':
+            pass
+        elif operator == '/':
+            pass
+        elif operator == '+':
+            pass
+        elif operator == '-':
+            pass
+        else: return 'Error: Invalid operator'
+        return score/len(str(expr))'''
 
 class PrimeIterator:
     '''
-        Iterator that generates prime numbers on the fly!
-        :D
+        Prime iterator that generates and store prime numbers on the fly!
     '''
 
     def __init__(self):
@@ -249,14 +301,14 @@ def has_repeated(number):
 def has_sequential(number):
     '''
         If arg is an integer number, returns the length of the group of digits which are in sequence.
-        The higher the value returned, the more common is the ocurrances of that kind.
+        The higher the value returned, the more common is the ocurrance of that kind.
         Returns False otherwise.
     '''
 
     if not type(number) is int:
         return None
 
-    # Gets its absolute number
+    # Gets its absolute value
     number = abs(number)
 
     # If the number has only one digit, then it has no sequence.
@@ -337,7 +389,7 @@ def prime_fact(number):
 
 def shortness(number):
     '''
-        If arg is an intenger number, returns a number which corresponds to
+        If arg is an integer number, returns a number which corresponds to
         1.75 to the power of the amount of digits which arg has - 1.
         Otherwise returns None.
     '''
@@ -347,5 +399,7 @@ def shortness(number):
     return 1.75 ** (len(str(number)) - 1)
 
 if __name__ == "__main__":
-    score('123 * 123')
+    print(score(123456789))
+    print(score(173))
+    print(score(111111111))
     pass
