@@ -11,14 +11,20 @@ function keyParser(event) {
   if (keyPressed == 13)
     ajaxRequest();
   else
-    if (keyPressed < 48 || keyPressed > 57) { // Is NOT a number?
+    {
+      /* This section cleans the navbar input with the purpose to only
+        allow the mathematical symbols. */
+                  // SPC, !, (, ), *, +, -, /, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ^
+      var allowedCh = [32,33,40,41,42,43,45,47,48,49,50,51,52,53,54,55,56,57,94]
       var i = 0, chCode = 0, nQuery = '';
+      // Checks every single character of the navbar.input
       for (i in navbar.value) {
         chCode = navbar.value.charCodeAt(i);
-        if (chCode >= 48 && chCode <= 57) {
+        // Verifies if the retrieved ch is within the allowed array
+        if (allowedCh.includes(chCode))
           nQuery += navbar.value[i];
-        }
     }
+    // Updates the navbar value for the new cleaned value
     navbar.value = nQuery;
   }
 }

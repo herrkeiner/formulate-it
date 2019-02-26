@@ -22,8 +22,9 @@ def send_html():
 def send_static(filepath=None):
     return static_file(filepath, root='./static/')
 
-@route('/parser&q=<number>')
-def processRequest(number):
+@route('/parser&q=<querry>')
+def processRequest(querry):
+    print(querry)
     dataDict = dict()
     # Save the original querry
     dataDict['rNumber'] = number
@@ -44,7 +45,7 @@ def processRequest(number):
                 dataDict['fResult'] = json.loads(dataDict['fResult'])
                 return json.dumps(dataDict)
             cnx.close()
-        # is the number too large to be factorized?
+        # is the number feasibly factorizable?
         if len(str(number)) <= 9:
             dataDict['fResult'] = m4f.prime_fact(number)
             # does the query has only one factor and its factor's exponent is 1?
